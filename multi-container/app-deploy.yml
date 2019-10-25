@@ -15,7 +15,7 @@ kind: Pod
 metadata:
   name: spring-mysql
   labels:
-    env: spring-mysql
+    app: spring-mysql
 spec:
     volumes:
     - name: mysql-persistent-storage
