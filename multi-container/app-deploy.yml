@@ -10,8 +10,8 @@ data:
   MYSQL_USER: dGVzdHVzZXI= #testuser
   MYSQL_PASSWORD: dGVzdDEyMw== #test123
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
   name: spring-mysql
 spec:
