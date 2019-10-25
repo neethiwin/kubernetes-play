@@ -10,7 +10,7 @@ data:
   MYSQL_USER: dGVzdHVzZXI= #testuser
   MYSQL_PASSWORD: dGVzdDEyMw== #test123
 ---
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Development
 metadata:
   name: spring-mysql
