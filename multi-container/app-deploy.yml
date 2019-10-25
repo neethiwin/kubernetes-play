@@ -11,7 +11,7 @@ data:
   MYSQL_PASSWORD: dGVzdDEyMw== #test123
 ---
 apiVersion: v1
-kind: Pod
+kind: Deployment
 metadata:
   name: spring-mysql
 spec:
