@@ -94,6 +94,20 @@ spec:
           secretKeyRef:
             name: mysql-secret
             key: MYSQL_PASSWORD
+      livenessProbe:
+        exec:
+          command: ["wget", "http://localhost:8080"]
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
+      readinessProbe:
+          exec:
+            # Check we can execute queries over TCP (skip-networking is off).
+          command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 2; done;']            
+          initialDelaySeconds: 5
+          periodSeconds: 2
+          timeoutSeconds: 1
+
 ---
 apiVersion: v1
 kind: Service
