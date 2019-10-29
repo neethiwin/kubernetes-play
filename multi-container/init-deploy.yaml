@@ -55,9 +55,9 @@ spec:
       livenessProbe:
         exec:
           command: ["mysqladmin", "ping"]
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
       readinessProbe:
           exec:
             # Check we can execute queries over TCP (skip-networking is off).
