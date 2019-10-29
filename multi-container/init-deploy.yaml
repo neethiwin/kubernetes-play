@@ -21,9 +21,10 @@ spec:
     - name: mysql-persistent-storage
       persistentVolumeClaim:
         claimName: mysql-pv-claim
-    containers:
+    initContainers:
     - image: mysql:5.7
       name: mysql
+      command: ["sh", "-c", "echo 'Check DB!' while ! mysql ping -h localhost -u ${MYSQL_USER} -p${MYSQL_PASSWORD}; do echo "Wait ..." sleep 1 done echo 'DB ready!'"]
       env:
         # Use secret in real usage
       - name: MYSQL_ROOT_PASSWORD
@@ -51,7 +52,8 @@ spec:
         name: mysql
       volumeMounts:
       - name: mysql-persistent-storage
-        mountPath: /var/lib/mysql
+        mountPath: /var/lib/mysql    
+    containers:
     - name: spring-mysql
       image: index.docker.io/neethirocks/spring-mysql:1.0
       ports:
