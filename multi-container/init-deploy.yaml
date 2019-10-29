@@ -21,6 +21,10 @@ spec:
     - name: mysql-persistent-storage
       persistentVolumeClaim:
         claimName: mysql-pv-claim
+    initContainers:
+    - name: init-mysql
+      image: busybox
+      command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 2; done;']        
     containers:
     - image: mysql:5.7
       name: mysql
@@ -84,11 +88,6 @@ spec:
           secretKeyRef:
             name: mysql-secret
             key: MYSQL_PASSWORD
-      initContainers:
-      - name: init-mysql
-        image: busybox
-        command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 2; done;']
-
 ---
 apiVersion: v1
 kind: Service
