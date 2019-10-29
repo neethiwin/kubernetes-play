@@ -84,10 +84,10 @@ spec:
           secretKeyRef:
             name: mysql-secret
             key: MYSQL_PASSWORD
-      initContainers:
-      - name: init-mysql
-        image: busybox
-        command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 2; done;']
+    initContainers:
+     - name: init-mysql
+       image: busybox
+       command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 2; done;']
 
 ---
 apiVersion: v1
