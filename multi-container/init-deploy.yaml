@@ -24,7 +24,7 @@ spec:
     initContainers:
     - image: mysql:5.7
       name: mysql
-      command: ['sh', '-c', 'until mysql ping -h 127.0.0.1 -u ${MYSQL_USER} -p${MYSQL_PASSWORD}; do echo waiting for mysql; sleep 2; done;']
+      command: ['bash', '-c', 'until mysql ping -h 127.0.0.1 -u${MYSQL_USER} -p${MYSQL_PASSWORD}; do echo waiting for mysql; sleep 2; done;']
       env:
         # Use secret in real usage
       - name: MYSQL_ROOT_PASSWORD
