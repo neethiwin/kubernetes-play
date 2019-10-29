@@ -96,13 +96,13 @@ spec:
             key: MYSQL_PASSWORD
       livenessProbe:
         exec:
-          command: ["wget", "http://localhost:8080"]
+          command: ["wget", "http://localhost:8080/api/adhaar"]
         initialDelaySeconds: 30
         periodSeconds: 10
         timeoutSeconds: 5
       readinessProbe:
           exec:
-            command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 2; done;']            
+            command: ['sh', '-c', 'until wget 127.0.0.1:3306; do echo waiting for mysql; sleep 2; done;']            
           initialDelaySeconds: 5
           periodSeconds: 2
           timeoutSeconds: 1
