@@ -102,8 +102,7 @@ spec:
         timeoutSeconds: 5
       readinessProbe:
           exec:
-            # Check we can execute queries over TCP (skip-networking is off).
-          command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 2; done;']            
+            command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 2; done;']            
           initialDelaySeconds: 5
           periodSeconds: 2
           timeoutSeconds: 1
