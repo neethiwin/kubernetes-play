@@ -41,6 +41,11 @@ spec:
           secretKeyRef:
             name: mysql-secret
             key: MYSQL_USER
+      - name: MYSQL_PWD
+        valueFrom:
+          secretKeyRef:
+            name: mysql-secret
+            key: MYSQL_ROOT_PASSWORD      
       - name: MYSQL_PASSWORD
         valueFrom:
           secretKeyRef:
@@ -61,7 +66,7 @@ spec:
       readinessProbe:
           exec:
             # Check we can execute queries over TCP (skip-networking is off).
-            command: ["mysql", "-u", "root", "-p", "password", "-h", "127.0.0.1", "-e", "SELECT 1"]            
+            command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]            
           initialDelaySeconds: 5
           periodSeconds: 2
           timeoutSeconds: 1
