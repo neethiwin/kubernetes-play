@@ -24,7 +24,7 @@ spec:
     initContainers:
     - image: mysql:5.7
       name: mysql
-      command: ["sh", "-c", "echo 'Check DB!' while ! mysql ping -h localhost -u ${MYSQL_USER} -p${MYSQL_PASSWORD}; do echo 'Wait ...' sleep 1 done echo 'DB ready!'"]
+      command: ['sh', '-c', 'until mysql ping -h localhost -u ${MYSQL_USER} -p${MYSQL_PASSWORD}; do echo waiting for mysql; sleep 2; done;']
       env:
         # Use secret in real usage
       - name: MYSQL_ROOT_PASSWORD
