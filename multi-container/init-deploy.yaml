@@ -21,10 +21,9 @@ spec:
     - name: mysql-persistent-storage
       persistentVolumeClaim:
         claimName: mysql-pv-claim
-    initContainers:
+    Containers:
     - image: mysql:5.7
       name: mysql
-      command: ['bash', '-c', 'until mysql ping -h 127.0.0.1 -u${MYSQL_USER} -p${MYSQL_PASSWORD}; do echo waiting for mysql; sleep 2; done;']
       env:
         # Use secret in real usage
       - name: MYSQL_ROOT_PASSWORD
@@ -52,8 +51,20 @@ spec:
         name: mysql
       volumeMounts:
       - name: mysql-persistent-storage
-        mountPath: /var/lib/mysql    
-    containers:
+        mountPath: /var/lib/mysql
+      livenessProbe:
+        exec:
+          command: ["mysqladmin", "ping"]
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+      readinessProbe:
+          exec:
+            # Check we can execute queries over TCP (skip-networking is off).
+            command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]
+          initialDelaySeconds: 5
+          periodSeconds: 2
+          timeoutSeconds: 1
     - name: spring-mysql
       image: index.docker.io/neethirocks/spring-mysql:1.0
       ports:
@@ -73,6 +84,10 @@ spec:
           secretKeyRef:
             name: mysql-secret
             key: MYSQL_PASSWORD
+      initContainers:
+      - name: init-mysql
+        image: busybox
+        command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 2; done;']
 
 ---
 apiVersion: v1
