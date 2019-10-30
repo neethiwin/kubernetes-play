@@ -63,7 +63,7 @@ spec:
       - name: mysql-persistent-storage
         mountPath: /var/lib/mysql   
     - name: spring-mysql
-      image: index.docker.io/neethirocks/spring-mysql:1.0
+      image: index.docker.io/neethirocks/spring-mysql:2.0
       ports:
         - containerPort: 8080
       env:
