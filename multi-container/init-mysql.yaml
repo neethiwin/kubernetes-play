@@ -24,7 +24,6 @@ spec:
     initContainers:
     - image: mysql:5.7
       name: mysql
-      command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]                  
       env:
       - name: MYSQL_PWD
         valueFrom:
@@ -62,7 +61,8 @@ spec:
         name: mysql
       volumeMounts:
       - name: mysql-persistent-storage
-        mountPath: /var/lib/mysql    
+        mountPath: /var/lib/mysql
+      command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]                          
     containers:
     - name: spring-mysql
       image: index.docker.io/neethirocks/spring-mysql:1.0
