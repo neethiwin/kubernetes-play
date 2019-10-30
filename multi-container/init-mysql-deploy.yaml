@@ -61,8 +61,7 @@ spec:
         name: mysql
       volumeMounts:
       - name: mysql-persistent-storage
-        mountPath: /var/lib/mysql
-      command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]                          
+        mountPath: /var/lib/mysql   
     - name: spring-mysql
       image: index.docker.io/neethirocks/spring-mysql:1.0
       ports:
