@@ -98,7 +98,6 @@ spec:
       image: busybox:1.28
       command: ['sh', '-c', 'until nslookup 127.0.0.1; do echo waiting for mysql; sleep 2; done;'] 
 
-
 ---
 apiVersion: v1
 kind: Service
