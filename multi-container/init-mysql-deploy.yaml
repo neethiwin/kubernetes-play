@@ -83,7 +83,7 @@ spec:
             key: MYSQL_PASSWORD
       livenessProbe:
         exec:
-          command: ["wget", "http://localhost:8080/api/adhaar"]
+          command: ["wget", "http://localhost:8080"]
         initialDelaySeconds: 30
         periodSeconds: 10
         timeoutSeconds: 5
