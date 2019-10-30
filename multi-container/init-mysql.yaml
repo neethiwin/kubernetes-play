@@ -21,9 +21,10 @@ spec:
     - name: mysql-persistent-storage
       persistentVolumeClaim:
         claimName: mysql-pv-claim
-    containers:
+    initContainers:
     - image: mysql:5.7
       name: mysql
+      command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]                  
       env:
       - name: MYSQL_PWD
         valueFrom:
@@ -61,20 +62,8 @@ spec:
         name: mysql
       volumeMounts:
       - name: mysql-persistent-storage
-        mountPath: /var/lib/mysql
-      livenessProbe:
-        exec:
-          command: ["mysqladmin", "ping"]
-        initialDelaySeconds: 30
-        periodSeconds: 10
-        timeoutSeconds: 5
-      readinessProbe:
-          exec:
-            # Check we can execute queries over TCP (skip-networking is off).
-            command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]            
-          initialDelaySeconds: 5
-          periodSeconds: 2
-          timeoutSeconds: 1
+        mountPath: /var/lib/mysql    
+    containers:
     - name: spring-mysql
       image: index.docker.io/neethirocks/spring-mysql:1.0
       ports:
