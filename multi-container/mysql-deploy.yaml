@@ -59,7 +59,7 @@ spec:
       - image: mysql:5.7
         name: mysql
         command: ["/bin/sh"]
-        args: ["-c", "sleep 10"]        
+        args: ["-c", "echo 'Hello'"]        
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
