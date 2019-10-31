@@ -58,7 +58,7 @@ spec:
       containers:
       - image: mysql:5.7
         name: mysql
-       command:
+        command:
         - bash
         - "-c"
         - |
