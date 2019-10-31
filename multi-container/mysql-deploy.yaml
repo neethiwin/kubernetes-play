@@ -58,6 +58,7 @@ spec:
       containers:
       - image: mysql:5.7
         name: mysql
+        command: ["bash", "-c", "echo [mysqld] > /etc/mysql/my.cnf;echo server-id=1 >> /etc/mysql/my.cnf;"]        
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
