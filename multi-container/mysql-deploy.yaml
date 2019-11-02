@@ -87,8 +87,7 @@ spec:
         - "-c"
         - |
           set -ex
-          [[ `hostname` =~ -([0-9]+)$ ]] || exit 0
-          cp /mnt/myconf/my.conf /etc/mysql/
+          cp /mnt/myconf/my.conf /etc/mysql && exit 1
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
