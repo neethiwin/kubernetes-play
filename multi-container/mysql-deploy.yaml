@@ -48,6 +48,7 @@ spec:
   selector:
     matchLabels:
       app: mysql
+  serviceName: mysql      
   template:
     metadata:
       labels:
