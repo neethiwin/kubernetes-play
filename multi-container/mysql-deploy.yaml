@@ -65,14 +65,15 @@ spec:
     app: mysql
 ---
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: mysql
 spec:
   selector:
     matchLabels:
       app: mysql
-  ServiceName: mysql    
+  strategy:
+    type: Recreate      
   template:
     metadata:
       labels:
