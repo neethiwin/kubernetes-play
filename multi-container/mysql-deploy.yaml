@@ -65,15 +65,14 @@ spec:
     app: mysql
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mysql
 spec:
   selector:
     matchLabels:
       app: mysql
-  strategy:
-    type: Recreate
+  ServiceName: mysql    
   template:
     metadata:
       labels:
@@ -87,7 +86,7 @@ spec:
         - "-c"
         - |
           set -ex
-          cp /mnt/myconf/my.conf /etc/mysql && exit 0
+          cp /mnt/myconf/my.conf /etc/mysql
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
