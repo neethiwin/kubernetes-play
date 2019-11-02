@@ -60,7 +60,8 @@ spec:
   selector:
     matchLabels:
       app: mysql
-  serviceName: mysql      
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
