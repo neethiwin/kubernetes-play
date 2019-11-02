@@ -87,7 +87,7 @@ spec:
         - "-c"
         - |
           set -ex 
-          cp /mnt/mydata/my.cnf /etc/mysql/ 
+          cp /mnt/myconf/my.cnf /etc/mysql/ 
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
@@ -117,7 +117,7 @@ spec:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
         - name: myconf
-          mountPath: /mnt/mydata
+          mountPath: /mnt/myconf
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
