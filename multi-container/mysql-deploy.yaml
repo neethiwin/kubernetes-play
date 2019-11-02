@@ -87,7 +87,7 @@ spec:
         - "-c"
         - |
           set -ex
-          cp /mnt/myconf/my.conf /etc/mysql && exit 1
+          cp /mnt/myconf/my.conf /etc/mysql && exit 0
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
