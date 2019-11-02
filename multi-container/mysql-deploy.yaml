@@ -96,7 +96,8 @@ spec:
       - image: mysql:5.7
         name: mysql
         env:
-          # Use secret in real usage
+        - name: MYSQL_SERVER_CONTAINER
+          value: mysql
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
               secretKeyRef:
