@@ -2,6 +2,19 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: mysqlinit
+  namespace: default
+data:
+  initdb.mysql: |
+    use test;
+    CREATE TABLE aadhaar ( name varchar(255) NOT NULL, 
+    sex char NOT NULL, birth DATE  NOT NULL, death DATE  NULL,
+    id int(255) NOT NULL AUTO_INCREMENT, PRIMARY KEY (id) );
+---
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: myconfmap
   namespace: default
 data:
@@ -110,6 +123,8 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
+        - name: mysqlinit
+          mountPath: /docker-entrypoint-initdb.d
         - name: myconf
           mountPath: /etc/mysql/my.cnf
           subPath: my.conf
