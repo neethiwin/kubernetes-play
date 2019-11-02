@@ -112,7 +112,7 @@ spec:
           mountPath: /var/lib/mysql
         - name: myconf
           mountPath: /etc/mysql/my.cnf
-          subPath: my.cnf
+          subPath: my.conf
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
