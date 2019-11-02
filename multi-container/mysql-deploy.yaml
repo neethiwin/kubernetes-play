@@ -82,12 +82,6 @@ spec:
       containers:
       - image: mysql:5.7
         name: mysql
-        command:
-        - bash
-        - "-c"
-        - |
-          set -ex
-          cp /mnt/myconf/my.conf /etc/mysql
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
@@ -117,7 +111,8 @@ spec:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
         - name: myconf
-          mountPath: /mnt/myconf
+          mountPath: /etc/mysql/my.cnf
+          subPath: my.cnf
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
