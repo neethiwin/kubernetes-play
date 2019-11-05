@@ -1,0 +1,10 @@
+STOP SLAVE;
+CHANGE MASTER TO master_host='9.193.117.78', master_user='usera', master_password='usera', MASTER_AUTO_POSITION=1;
+CHANGE REPLICATION FILTER REPLICATE_IGNORE_DB=(mysql_innodb_cluster_metadata);
+FLUSH PRIVILEGES;
+START SLAVE;
+SHOW SLAVE STATUS;
+
+STOP SLAVE;
+DROP USER 'userA'@'%';
+START SLAVE;
