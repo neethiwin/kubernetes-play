@@ -139,20 +139,9 @@ spec:
     targetPort: 3306
     protocol: TCP
     nodePort: 32000
-  selector:
-    app: mysql
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql
-spec:
-  type: NodePort
-  ports:
   - port: 22
     targetPort: 22
     protocol: TCP
-    nodePort: 32001
+    nodePort: 32001    
   selector:
     app: mysql
