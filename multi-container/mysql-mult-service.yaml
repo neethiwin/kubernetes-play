@@ -83,7 +83,7 @@ spec:
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
-            claimName: nfs-claim1
+            claimName: mysql-pv-claim
         - name: mstr-replcmap-vol
           configMap:
             name: mstr-replcmap
