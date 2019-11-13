@@ -1,0 +1,128 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mstr-mysqlinitcmap
+  namespace: default
+data:
+  initdb.sql: |-
+    CREATE TABLE aadhaar ( name varchar(255) NOT NULL,
+    sex char NOT NULL, birth DATE  NOT NULL, death DATE  NULL,
+    id int(255) NOT NULL AUTO_INCREMENT, PRIMARY KEY (id) );
+    CREATE USER 'usera'@'%' IDENTIFIED BY 'usera';
+    GRANT REPLICATION SLAVE ON *.* TO 'usera' IDENTIFIED BY 'usera';
+    FLUSH PRIVILEGES;
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mstr-replcmap
+  namespace: default
+data:
+  my.conf: |
+    [mysqld]
+    log-bin=mysql-bin
+    server-id=1
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: cGFzc3dvcmQ= #password
+  MYSQL_DATABASE: dGVzdA== #test
+  MYSQL_USER: dGVzdHVzZXI= #testuser
+  MYSQL_PASSWORD: dGVzdDEyMw== #test123
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: nfs-claim1
+        - name: mstr-replcmap-vol
+          configMap:
+            name: mstr-replcmap
+        - name: mysqlinitconf-vol
+          configMap:
+            name: mstr-mysqlinitcmap
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        env:
+        - name: MYSQL_SERVER_CONTAINER
+          value: mysql
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: MYSQL_ROOT_PASSWORD
+        - name: MYSQL_DATABASE
+          valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: MYSQL_DATABASE
+        - name: MYSQL_USER
+          valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: MYSQL_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: MYSQL_PASSWORD
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+        - name: mysqlinitconf-vol
+          mountPath: /docker-entrypoint-initdb.d
+        - name: mstr-replcmap-vol
+          mountPath: /etc/mysql/my.cnf
+          subPath: my.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  type: NodePort
+  ports:
+  - port: 3306
+    targetPort: 3306
+    protocol: TCP
+    nodePort: 32000
+  selector:
+    app: mysql
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  type: NodePort
+  ports:
+  - port: 22
+    targetPort: 22
+    protocol: TCP
+    nodePort: 32001
+  selector:
+    app: mysql
