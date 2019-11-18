@@ -19,7 +19,6 @@ metadata:
 data:
   my.conf: |
     [mysqld]
-    log-bin=mysql-bin
     server-id=1
     log-bin=/var/lib/mysql/mysql-bin
     binlog-do-db=test
