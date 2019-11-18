@@ -19,8 +19,13 @@ metadata:
 data:
   mysqld.cnf: |
     [mysqld]
-    log-bin=mysql-bin
+    log-bin=/var/lib/mysql/mysql-bin
     server-id=2
+    replicate-do-db=test
+    relay-log=/var/lib/mysql/mysql-relay-bin
+    relay-log-index=/var/lib/mysql/mysql-relay-bin.index
+    master-info-file=/var/lib/mysql/mysql-master.info
+    relay-log-info-file=/var/lib/mysql/mysql-relay-log.info
 ---
 ---
 apiVersion: v1    
