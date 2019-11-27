@@ -119,23 +119,4 @@ spec:
                 key: MYSQL_PASSWORD          
         ports:
         - containerPort: 3306
-          name: mysql
-        volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
-        - name: mysqlinitconf
-          mountPath: /docker-entrypoint-initdb.d
-        - name: myconf
-          mountPath: /etc/mysql/my.cnf
-          subPath: my.conf
-      volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName: mysql-pv1-claim
-      - name: myconf
-        configMap:
-          name: myconfmap
-      - name: mysqlinitconf
-        configMap:
-          name: mysqlinit
-      
+          name: mysql      
