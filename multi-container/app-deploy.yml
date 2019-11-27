@@ -20,7 +20,7 @@ spec:
     volumes:
     - name: mysql-persistent-storage
       persistentVolumeClaim:
-        claimName: mysql-pv-claim
+        claimName: mysql-pv1-claim
     containers:
     - image: mysql:5.7
       name: mysql
