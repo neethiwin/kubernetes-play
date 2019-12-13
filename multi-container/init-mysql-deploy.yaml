@@ -21,6 +21,8 @@ spec:
     - image: mysql:5.7
       name: mysql
       env:
+      - name: MYSQL_HOST
+        value: 127.0.0.1
       - name: MYSQL_PWD
         valueFrom:
           secretKeyRef:
