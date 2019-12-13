@@ -17,10 +17,6 @@ metadata:
   labels:
     app: spring-mysql
 spec:
-    volumes:
-    - name: mysql-persistent-storage
-      persistentVolumeClaim:
-        claimName: mysql-pv-claim
     containers:
     - image: mysql:5.7
       name: mysql
