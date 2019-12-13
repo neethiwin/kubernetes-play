@@ -20,35 +20,29 @@ spec:
     containers:
     - image: mysql:5.7
       name: mysql
-      env:
-      - name: MYSQL_SERVER_CONTAINER
-        value: 127.0.0.1
-      - name: MYSQL_PWD
-        valueFrom:
-          secretKeyRef:
-            name: mysql-secret
-            key: MYSQL_ROOT_PASSWORD            
-        # Use secret in real usage
-      - name: MYSQL_ROOT_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: mysql-secret
-            key: MYSQL_ROOT_PASSWORD
-      - name: MYSQL_DATABASE
-        valueFrom:
-          secretKeyRef:
-            name: mysql-secret
-            key: MYSQL_DATABASE
-      - name: MYSQL_USER
-        valueFrom:
-          secretKeyRef:
-            name: mysql-secret
-            key: MYSQL_USER
-      - name: MYSQL_PWD
-        valueFrom:
-          secretKeyRef:
-            name: mysql-secret
-            key: MYSQL_ROOT_PASSWORD      
+    env:
+    - name: MYSQL_SERVER_CONTAINER
+      value: mysql
+    - name: MYSQL_ROOT_PASSWORD
+      valueFrom:
+         secretKeyRef:
+           name: mysql-secret
+           key: MYSQL_ROOT_PASSWORD
+    - name: MYSQL_DATABASE
+      valueFrom:
+         secretKeyRef:
+           name: mysql-secret
+           key: MYSQL_DATABASE
+    - name: MYSQL_USER
+      valueFrom:
+         secretKeyRef:
+           name: mysql-secret
+           key: MYSQL_USER
+    - name: MYSQL_PASSWORD
+      valueFrom:
+         secretKeyRef:
+           name: mysql-secret
+           key: MYSQL_PASSWORD      
       ports:
       - containerPort: 3306
         name: mysql
