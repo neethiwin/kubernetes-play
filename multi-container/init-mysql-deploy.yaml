@@ -1,4 +1,14 @@
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mstr-mysqlinitcmap
+  namespace: default
+data:
+  initdb.sql: |-
+    grant all privileges on *.* to root@localhost identified by '' with grant option;
+    flush privileges;
+---
 apiVersion: v1    
 kind: Secret
 metadata:
@@ -17,6 +27,10 @@ metadata:
   labels:
     app: spring-mysql
 spec:
+    volumes:
+    - name: mstr-mysqlinitcmap-vol
+      configMap:
+        name: mstr-mysqlinitcmap
     containers:
     - image: mysql:5.7
       name: mysql
@@ -55,6 +69,10 @@ spec:
       ports:
       - containerPort: 3306
         name: mysql
+      volumeMounts:
+      - name: mstr-mysqlinitcmap-vol
+        mountPath: /docker-entrypoint-initdb.d
+        
     - name: spring-mysql
       image: index.docker.io/neethirocks/spring-mysql:2.0
       ports:
