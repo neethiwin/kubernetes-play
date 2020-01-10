@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spring-mysql
+  namespace: sanovi
+  labels:
+    app: spring-mysql
+spec:
+    containers:
+    - name: spring-mysql
+      image: index.docker.io/neethirocks/spring-mysql:1.0
+      ports:
+        - containerPort: 8080
+      env:
+      - name: spring_jpa_database
+        value: mysql
+      - name: spring_datasource_url
+        value: jdbc:mysql://mysql-service:3306/test?useSSL=false
+      - name: spring_datasource_username
+        valueFrom:
+          secretKeyRef:
+            name: mysql-secret
+            key: MYSQL_USER
+      - name: spring_datasource_password
+        valueFrom:
+          secretKeyRef:
+            name: mysql-secret
+            key: MYSQL_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-mysql-service
+  namespace: sanovi
+  labels:
+    name: spring-mysql-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: spring-mysql
+  type: NodePort
